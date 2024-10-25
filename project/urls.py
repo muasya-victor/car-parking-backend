@@ -23,15 +23,15 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from django.conf.urls.static import static
 
-admin.site.site_title = "KEJAMOVE"
-admin.site.site_header = "KEJAMOVE"
-admin.site.index_title = "crm"
+admin.site.site_title = "SMARTPARK"
+admin.site.site_header = "SMARTPARK"
+admin.site.index_title = "sp"
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Kejamove API",
+        title="SMARTPARK API",
         default_version='v1',
-        description="API documentation for Kejamove",
+        description="API documentation for SMARTPARK",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="contact@myapi.local"),
         license=openapi.License(name="BSD License")
