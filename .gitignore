@@ -15,6 +15,7 @@ db.sqlite3
 .env
 venv/
 env/
+charles_env/
 *.env
 
 # Static files
