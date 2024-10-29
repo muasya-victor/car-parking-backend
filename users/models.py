@@ -35,17 +35,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('+255', 'Tanzania'),
     ]
 
-    user_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(unique=True)
-    user_first_name = models.CharField(max_length=255)
-    user_last_name = models.CharField(max_length=255)
-    user_role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    user_country_code = models.CharField(max_length=20, choices=COUNTRY_CODES)
-    user_phone_number = models.CharField(max_length=20, blank=True, null=True)
-    user_is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    user_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="user_id")
+    email = models.EmailField(unique=True, verbose_name="user_email")
+    user_first_name = models.CharField(max_length=255, verbose_name="user_first_name")
+    user_last_name = models.CharField(max_length=255, verbose_name="user_last_name")
+    user_role = models.CharField(max_length=20, choices=ROLE_CHOICES, verbose_name="user_role")
+    user_country_code = models.CharField(max_length=20, choices=COUNTRY_CODES, verbose_name="user_country_code", blank=True, null=True)
+    user_phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="user_phone_number")
+    user_is_active = models.BooleanField(default=True, verbose_name="user_is_active")
+    is_staff = models.BooleanField(default=False, verbose_name="user_is_staff")
+    is_superuser = models.BooleanField(default=False, verbose_name="user_is_superuser")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="user_created_at")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['user_role']
@@ -58,6 +58,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def delete(self, *args, **kwargs):
         self.is_active = False
         self.save(update_fields=['is_active'])
+
+        
 
     class Meta:
         verbose_name = "User"
