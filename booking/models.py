@@ -8,7 +8,7 @@ from users.models import CustomUser
 
 # Create your models here.
 class Booking(models.Model):
-    booking_id = models.IntegerField(primary_key=True, unique=True, editable=False)
+    booking_id = models.AutoField(primary_key=True, unique=True, editable=False)
     booking_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, help_text="Driver Booking The Slot")
     booking_start_time = models.DateTimeField(default=timezone.now)
     booking_end_time = models.DateTimeField()
