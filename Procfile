@@ -1,1 +1,1 @@
-web: gunicorn kejamove.wsgi
+web: gunicorn projects.wsgi
