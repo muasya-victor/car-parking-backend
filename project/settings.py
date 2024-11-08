@@ -99,8 +99,7 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'project-production.up.railway.app',
-                 'walrus-app-69fvy.ondigitalocean.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'car-parking-backend-production.up.railway.app']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://kejamove-production.up.railway.app',
