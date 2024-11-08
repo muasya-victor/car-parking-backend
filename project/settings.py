@@ -105,7 +105,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://kejamove-production.up.railway.app',
     'http://localhost',
     'http://127.0.0.1',
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'https://car-parking-backend-production.up.railway.app',
 ]
 
 
