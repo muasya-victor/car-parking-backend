@@ -35,12 +35,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('+255', 'Tanzania'),
     ]
 
-    user_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name="user_id")
+    user_id = models.IntegerField(unique=True, editable=False, verbose_name="user_id",primary_key=True)
     email = models.EmailField(unique=True, verbose_name="user_email")
     user_first_name = models.CharField(max_length=255, verbose_name="user_first_name")
     user_last_name = models.CharField(max_length=255, verbose_name="user_last_name")
     user_role = models.CharField(max_length=20, choices=ROLE_CHOICES, verbose_name="user_role")
-    user_country_code = models.CharField(max_length=20, choices=COUNTRY_CODES, verbose_name="user_country_code", blank=True, null=True)
+    user_country_code = models.CharField(max_length=20, choices=COUNTRY_CODES, default='+254',
+                                         verbose_name="user_country_code", blank=True, null=True)
     user_phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="user_phone_number")
     user_is_active = models.BooleanField(default=True, verbose_name="user_is_active")
     is_staff = models.BooleanField(default=False, verbose_name="user_is_staff")
@@ -56,8 +57,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def delete(self, *args, **kwargs):
-        self.is_active = False
-        self.save(update_fields=['is_active'])
+        self.user_is_active = False
+        self.save(update_fields=['user_is_active'])
 
         
 

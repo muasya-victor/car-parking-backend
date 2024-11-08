@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Ensures equal column width */
+        }
+
+        tbody tr {
+            width: 100%;
+        }
+
+        td.cldata {
+            word-break: break-all; /* This will break the text at any character to prevent overflow */
+            overflow-wrap: break-word; /* This will break the words at appropriate places */
+        }
+
+        th,
+        td, .cldata {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            width: 20%; /* 100% divided by the number of columns (6) */
+            text-align: left;
+            word-wrap: break-word; /* Forces text to wrap */
+            overflow-wrap: break-word; /* Breaks words when they overflow */
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>User Report</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>First Name</th>
+                <th>Email</th>
+                <th>User Role</th>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.user_id|default:"N/A" }}</td>
+                <td>{{ user.user_first_name|default:"N/A" }}</td>
+                <td class="cldata">{{ user.email|default:"N/A" }}</td>
+                <td>{{ user.user_role|default:"N/A" }}</td>
+                <td>{{ user.user_phone_number|default:"N/A" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

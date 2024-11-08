@@ -23,6 +23,8 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from django.conf.urls.static import static
 
+from users.views import CustomTokenObtainPairView
+
 admin.site.site_title = "SMARTPARK"
 admin.site.site_header = "SMARTPARK"
 admin.site.index_title = "sp"
@@ -44,5 +46,11 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('admin/', admin.site.urls),
-    path('api/users/', include('users.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/', include('users.urls')),
+    path('api/', include('booking.urls')),
+    path('api/', include('parking_slot.urls')),
+]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
