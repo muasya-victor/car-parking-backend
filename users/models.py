@@ -35,7 +35,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('+255', 'Tanzania'),
     ]
 
-    user_id = models.IntegerField(unique=True, editable=False, verbose_name="user_id",primary_key=True)
+    user_id = models.AutoField(unique=True, editable=False, verbose_name="user_id",primary_key=True)
     email = models.EmailField(unique=True, verbose_name="user_email")
     user_first_name = models.CharField(max_length=255, verbose_name="user_first_name")
     user_last_name = models.CharField(max_length=255, verbose_name="user_last_name")
