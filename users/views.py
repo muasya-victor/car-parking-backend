@@ -106,11 +106,17 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = 'user_id'
+
     def get_queryset(self):
         user = self.request.user
-        if not user.is_superuser:
-            return CustomUser.objects.filter(id=user.user_id)
+        # if not user.is_superuser:
+        #     return CustomUser.objects.filter(user_id=user.user_id)
+
+        if user.user_role == 'driver':
+            return CustomUser.objects.filter(user_id=self.request.user.user_id)
+
         return CustomUser.objects.all()
+
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()

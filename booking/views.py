@@ -10,7 +10,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     """
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    permission_classes = [AllowAny]  # Allow access without login
+    permission_classes = [AllowAny]
 
 
 class BookingHistoryViewSet(viewsets.ModelViewSet):
