@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from rest_framework import viewsets, permissions, status
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 import io
 from xhtml2pdf import pisa
@@ -101,6 +102,12 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 #     serializer_class = CustomTokenObtainPairSerializer
 #
 
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status, viewsets
+from .models import CustomUser
+from .serializers import CustomUserSerializer
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
@@ -109,55 +116,34 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        # if not user.is_superuser:
-        #     return CustomUser.objects.filter(user_id=user.user_id)
 
         if user.user_role == 'driver':
             return CustomUser.objects.filter(user_id=self.request.user.user_id)
 
         return CustomUser.objects.all()
 
-
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    def get_permissions(self):
+        """
+        Customize permissions for specific actions.
+        """
+        if self.action == 'create':
+            return [AllowAny()]
+        return super().get_permissions()
 
-    # def list(self, request, *args, **kwargs):
-    #     response = super().list(request, *args, **kwargs)
-    #     generate_pdf = request.query_params.get(
-    #         'generate_pdf', 'false').lower() == 'true'
-    #     if generate_pdf:
-    #         buffer = io.BytesIO()
-    #         p = canvas.Canvas(buffer, pagesize=letter)
-    #         p.setFont("Helvetica", 12)
-    #         width, height = letter
-    #
-    #         y = height - 40  # Start from the top of the page
-    #
-    #         users = self.get_queryset()
-    #         p.drawString(30, y, "User List")
-    #         y -= 20
-    #
-    #         for user in users:
-    #             p.drawString(
-    #                 30, y,
-    #                 f"First Name: {user.first_name}, Last Name: {user.last_name}, Email: {user.email}, User Type: {user.user_type}")
-    #             y -= 20
-    #             if y < 40:
-    #                 p.showPage()
-    #                 p.setFont("Helvetica", 12)
-    #                 y = height - 40
-    #
-    #         p.save()
-    #
-    #         buffer.seek(0)
-    #         return FileResponse(buffer, as_attachment=True, filename='user_list.pdf')
-    #
-    #     return response
-    #
-    #
+    def create(self, request, *args, **kwargs):
+        """
+        Handle user creation, allowing unrestricted access for this action.
+        """
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 
 class PDFView(APIView):
