@@ -51,6 +51,7 @@ urlpatterns = [
     path('api/', include('booking.urls')),
     path('api/', include('parking_slot.urls')),
     path('api/', include('payment.urls')),
+    path('api/', include('notification.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
