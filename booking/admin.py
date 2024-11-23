@@ -18,12 +18,12 @@ class BookingAdmin(admin.ModelAdmin):
     ordering = ('booking_start_time',)
 
 
-@admin.register(BookingHistory)
-class BookingHistoryAdmin(admin.ModelAdmin):
-    list_display = ('booking_history_id', 'get_booking_user', 'get_booking_start_time', 'get_booking_end_time')
-    list_filter = ('booking_history_booking__booking_user',)
-    search_fields = ('booking_history_id', 'booking_history_booking__booking_user__user_email')
-    readonly_fields = ('booking_history_id',)
+# @admin.register(BookingHistory)
+# class BookingHistoryAdmin(admin.ModelAdmin):
+#     list_display = ('booking_history_id', 'get_booking_user', 'get_booking_start_time', 'get_booking_end_time')
+#     list_filter = ('booking_history_booking__booking_user',)
+#     search_fields = ('booking_history_id', 'booking_history_booking__booking_user__user_email')
+#     readonly_fields = ('booking_history_id',)
 
     def get_booking_user(self, obj):
         return obj.booking_history_booking.booking_user.email
