@@ -40,12 +40,11 @@ class CustomUserAdmin(admin.ModelAdmin):
 
     # Custom method to display password
     def password(self, obj):
-        return "••••••••"  # Mask the password
+        return obj.password  # Mask the password
     password.short_description = _('user password')  # Lowercase here
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
-        form.base_fields['password'].widget.attrs['readonly'] = True  # Make password field readonly
         return form
 
 admin.site.unregister(Group)
