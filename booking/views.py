@@ -12,6 +12,16 @@ class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
     permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        """
+        Restrict the queryset so that only admins see all bookings,
+        while regular users only see their own bookings.
+        """
+        user = self.request.user
+        if user.is_staff:
+            return Booking.objects.all()
+        return Booking.objects.filter(booking_user=user)
+
 
 class BookingHistoryViewSet(viewsets.ModelViewSet):
     """

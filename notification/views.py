@@ -12,5 +12,4 @@ class NotificationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Return notifications only for the authenticated user
         return Notification.objects.filter(notification_user=self.request.user).order_by('-notification_date')
