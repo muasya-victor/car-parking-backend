@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Slot Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .report-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .report-header h1 {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <h1>Parking Slot Report</h1>
+        <p>Generated on: {{ current_date }}</p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Availability</th>
+                <th>Price/Hour (Ksh)</th>
+                <th>Capacity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for slot in slots %}
+            <tr>
+                <td>{{ slot.parking_slot_location }}</td>
+                <td>
+                    {% if slot.parking_slot_available %}
+                        Available
+                    {% else %}
+                        Occupied
+                    {% endif %}
+                </td>
+                <td>{{ slot.parking_slot_price_per_hour }}</td>
+                <td>{{ slot.parking_slot_capacity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
