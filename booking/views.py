@@ -52,23 +52,18 @@ class PDFView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        # Fetch parking slots with related bookings
-        slots = ParkingSlot.objects.prefetch_related(
-            Prefetch(
-                'booking_set',
-                queryset=Booking.objects.all()
-            )
-        )
+        # Fetch all bookings with related parking slot and user details
+        bookings = Booking.objects.select_related('booking_user', 'booking_parking_slot')
 
         context = {
             'current_date': now().strftime('%Y-%m-%d %H:%M:%S'),
-            'slots': slots
+            'bookings': bookings,
         }
 
         # Render the template
-        html_string = render_to_string('slot_report.html', context)
+        html_string = render_to_string('booking_report.html', context)
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=slot_report.pdf'
+        response['Content-Disposition'] = 'attachment; filename=all_bookings_report.pdf'
 
         # Generate PDF
         result = BytesIO()

@@ -29,56 +29,35 @@
         .report-header h1 {
             margin: 0;
         }
-        .slot-section {
-            margin-bottom: 30px;
-        }
-        .slot-title {
-            margin: 10px 0;
-            font-size: 1.2em;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
     <div class="report-header">
-        <h1>Comprehensive Parking Slot Booking Report</h1>
+        <h1>Comprehensive Booking Report</h1>
         <p>Generated on: {{ current_date }}</p>
     </div>
 
-    {% for slot in slots %}
-    <div class="slot-section">
-        <div class="slot-title">
-            Parking Slot: {{ slot.location }} (Price per Hour: Ksh {{ slot.price_per_hour }}, Capacity: {{ slot.capacity }})
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Booking ID</th>
-                    <th>User</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Status</th>
-                    <th>Payment Status</th>
-                    <th>Total Cost (Ksh)</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for booking in slot.bookings %}
-                <tr>
-                    <td>{{ booking.booking_id }}</td>
-                    <td>{{ booking.booking_user.username }}</td>
-                    <td>{{ booking.booking_start_time }}</td>
-                    <td>{{ booking.booking_end_time }}</td>
-                    <td>{{ booking.booking_status }}</td>
-                    <td>{{ booking.booking_payment_status }}</td>
-                    <td>{{ booking.booking_total_cost }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <p><strong>Total Bookings:</strong> {{ slot.bookings|length }}</p>
-        <p><strong>Total Revenue for Slot (Ksh):</strong> {{ slot.bookings|sum:"booking_total_cost" }}</p>
-    </div>
-    {% endfor %}
+    <table>
+        <thead>
+            <tr>
+                <th>Parking Slot</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Total Cost (Ksh)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.booking_parking_slot.parking_slot_floor_number }}</td>
+                <td> {{ booking.booking_start_time }} to {{ booking.booking_end_time }}</td>
+                <td>{{ booking.booking_status }}</td>
+                <td>{{ booking.booking_total_cost }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><strong>Total Bookings:</strong> {{ bookings|length }}</p>
 </body>
 </html>
